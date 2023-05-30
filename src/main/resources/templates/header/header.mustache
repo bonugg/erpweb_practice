@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+</head>
+<header>
+    <nav>
+        <ul>
+            <li id="logo_li">
+                <a id="logo_text" href="/">BIT ERP</a>
+                <a id="menu_text" href="/vacation">휴가</a>
+                <a id="menu_text" href="/meeting">회의</a>
+                <a id="menu_text" href="/business">출장</a>
+            </li>
+            {{#user.CNO}}
+            <li id="login_sigin_li">
+                <div id="login_signin_div">
+                    <a id="name_text">{{user.NAME}}님</a>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+                        <button type="button" id="logout_text" onclick="this.form.submit();">
+                            로그아웃
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {{/user.CNO}}
+            {{^user.CNO}}
+                <li id="login_sigin_li">
+                    <div id="login_signin_div">
+                        <a id="login_text" href="/login">로그인</a>
+                        <a id="sginin_text" href="/sginin">회원가입</a>
+                    </div>
+                </li>
+            {{/user.CNO}}
+        </ul>
+    </nav>
+</header>
+</html>

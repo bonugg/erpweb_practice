@@ -1,0 +1,102 @@
+#fullscreen{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#screen1{
+    width: 60%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#siginin_form{
+    width: 60%;
+    height: 70%;
+}
+#div_form{
+    width: 60%;
+    height: 100%;
+    text-align: left;
+    margin: auto auto auto 200px;
+}
+#error_dept{
+    width: 55%;
+    font-size: 5px;
+    text-align: left;
+}
+#error_name{
+    width: 100%;
+    font-size: 5px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+#error_cno{
+    width: 100%;
+    font-size: 5px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+#error_pwd{
+    width: 100%;
+    font-size: 5px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+#error_pwdchk{
+    width: 100%;
+    font-size: 5px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+#error_email{
+    width: 100%;
+    font-size: 5px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+select{
+    width: 150px;
+    height: 30px;
+    border-radius: 3px;
+    text-align: center;
+    border: 1px solid gray;
+    background-color: white;
+}
+select
+select:focus{
+    outline: none;
+    border: 1px solid gray;
+}
+input[type="text"], input[type="password"]{
+    width: 300px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    background-color: white;
+    margin-top: 40px;
+}
+input[type="text"]:focus, input[type="password"]:focus{
+    outline: none;
+    box-shadow: 0 0 3px 3px cornflowerblue;
+}
+#button_sign_cancle_div{
+    display: flex;
+    justify-content: left;
+    margin-top: 40px;
+}
+.button_sign_cancle{
+    width: 145px;
+    height: 40px;
+    border-radius: 3px;
+    outline:none;
+    border: 1px solid gray;
+}
+.button_sign_cancle:hover{
+    background-color: lightgray;
+}
+.button_sign_cancle:disabled:hover{
+    background-color: lightgray;
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js'></script>
+    <script src='js/locales/ko.global.min.js'></script>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+        <div id="screen1-1">
+            <div id="screen1-1-1">
+
+            </div>
+        </div>
+        <div id="screen1-2">
+            <div id="screen1-2-1">
+
+            </div>
+
+        </div>
+    </div>
+    <div id="screen2">
+        <div id="screen2-1">
+            <div id="cal_btn_div">
+                <button class="cal_btn" id="all">전체보기</button>
+                <button class="cal_btn" id="vacation" style="margin-left: 5px">휴가</button>
+                <button class="cal_btn" id="meeting" style="margin-left: 5px">회의</button>
+                <button class="cal_btn" id="business" style="margin-left: 5px">출장</button>
+            </div>
+            <div id="cal_div">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+</html>

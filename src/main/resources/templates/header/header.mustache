@@ -11,14 +11,15 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <link rel="stylesheet" type="text/css" href="css/header.css">
 </head>
-<header>
+<header id="header1">
     <nav>
         <ul>
             <li id="logo_li">
                 <a id="logo_text" href="/">BIT ERP</a>
                 <a id="menu_text" href="/vacation">휴가</a>
-                <a id="menu_text" href="/meeting">회의</a>
-                <a id="menu_text" href="/business">출장</a>
+                <a id="menu_text" href="/">회의</a>
+                <a id="menu_text" href="/">출장</a>
+                <a id="menu_text" href="/vacationAcess">휴가 승인</a>
             </li>
             {{#user.CNO}}
             <li id="login_sigin_li">
@@ -42,6 +43,9 @@
                 </li>
             {{/user.CNO}}
         </ul>
+    </nav>
+    <nav>
+
     </nav>
 </header>
 </html>

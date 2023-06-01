@@ -12,14 +12,19 @@
 {{>header/header}}
 <div id="fullscreen">
     <div id="screen1">
-        <form action="#" method="POST" id="vacation_form">
-            <input type="text" disabled="disabled" value="{{user.NAME}}">
+        <form action="/vacation/add" method="POST" id="vacation_form">
+            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+            <input type="hidden" name="user" value="{{user.NO}}">
+            <input type="hidden" name="TITLE" value="{{user.NAME}}">
+            <input type="hidden" name="Accessva" value="미승인">
+            <input type="text" name="NAME" readOnly value="{{user.NAME}}">
             <br>
-            <input type="text" disabled="disabled" value="{{user.DEPT}}">
+            <input type="text" name="CNO" readOnly value="{{user.CNO}}">
             <br>
-
+            <input type="text" name="DEPT" readOnly value="{{user.DEPT}}">
+            <br>
             <label for="leave_type">휴가 종류:</label>
-            <select id="leave_type" name="leave_type">
+            <select id="leave_type" name="VACATIONTYPE">
                 <option value="연차">연차</option>
                 <option value="반차">반차</option>
                 <option value="무급">무급</option>
@@ -29,14 +34,16 @@
             <br>
 
             <label for="start_date">휴가 시작일:</label>
-            <input type="date" id="start_date" name="start_date" required/>
+            <input type="date" id="start" name="start" required/>
 
             <label for="end_date">휴가 종료일:</label>
-            <input type="date" id="end_date" name="end_date" required/>
+            <input type="date" id="end" name="end" required/>
             <br>
 
             <label for="reason">휴가 사유:</label>
-            <textarea id="reason" name="reason" required></textarea>
+            <textarea id="reason" name="DESCRIPTION" required></textarea>
+            <br>
+            <input type="hidden" name="CLASSIFY" value="휴가">
             <br>
 
             <input type="submit" value="제출">
@@ -44,5 +51,6 @@
 
     </div>
 </div>
+<script src="js/vacation.js"></script>
 </body>
 </html>

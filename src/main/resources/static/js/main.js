@@ -1,3 +1,4 @@
+let popupLayer = document.getElementById("popup_layer");
 document.addEventListener('DOMContentLoaded', function () {
     $(function () {
         const request = $.ajax({
@@ -6,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "json"
         });
         request.done(function (data) {
+            console.log(data)
             const calendarEl = document.getElementById('calendar');
             $('#business').css("backgroundColor", "lightgray");
             $('#vacation').css("backgroundColor", "lightgray");
@@ -21,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
-            let nonVacationData = data.filter(function (event) {
+            let filteredBusinessData = data.filter(function (event) {
                 return event.classify === '출장';
             }).map(function (event) {
                 return {
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
-            let nonVacationData2 = data.filter(function (event) {
+            let filteredMeetingData = data.filter(function (event) {
                 return event.classify === '회의';
             }).map(function (event) {
                 return {
@@ -41,17 +43,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
-
-            let newEventData = nonVacationData.concat(filteredVacationData).concat(nonVacationData2)
+            let newEventData = filteredVacationData.concat(filteredBusinessData).concat(filteredMeetingData)
                 .map(function(event) {
-                    const newEvent = Object.assign({}, event); // 객체 복제
-                    const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
-                    endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
-                    newEvent.end = endDate.toISOString().substring(0, 10); // ISO 8601 문자열로 변환 후, 문자열 일부를 추출
-                    return newEvent;
+
+                        const newEvent = Object.assign({}, event); // 객체 복제
+                        const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
+                        if(event.classify != '회의') {
+                            endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
+                            newEvent.end = endDate.toISOString().substring(0, 10); // ISO 8601 문자열로 변환 후, 문자열 일부를 추출
+                        }
+                        return newEvent;
                 });
 
+            console.log(newEventData);
             let calendar = new FullCalendar.Calendar(calendarEl, {
+                events : newEventData,
+                dayMaxEventRows: true, // for all non-TimeGrid views
+                views: {
+                    timeGrid: {
+                        dayMaxEventRows: 6 // adjust to 6 only for timeGridWeek/timeGridDay
+                    }
+                },
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: 'today prev',
@@ -61,7 +73,46 @@ document.addEventListener('DOMContentLoaded', function () {
                 firstDay: 1, //월요일부터 시작
                 locale: "ko",
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-                events: newEventData,
+                eventClick: function(info) {
+                    popupLayer.style.display = "block";
+
+                    if(info.event.extendedProps.classify == '휴가'){
+                        $('#popup_vacationtype_div').text(info.event.extendedProps.vacationtype).show();
+                        $('#popup_desc_div').css("height", "64%");
+                    }else {
+                        $('#popup_vacationtype_div').hide();
+                        $('#popup_desc_div').css("height", "73%");
+                    }
+                    $('#popup_title').text(info.event.title);
+                    $('#popup_desc').text(info.event.extendedProps.description);
+
+
+                    let datedata = [];
+                    datedata[0] = info.event.start;
+                    datedata[1] = info.event.end;
+
+                    for(let i = 0; i < datedata.length; i++){
+                        const year = datedata[i].getFullYear();
+                        const month = String(datedata[i].getMonth() + 1).padStart(2, "0");
+                        const day = String(datedata[i].getDate()).padStart(2, "0");
+                        const hours = String(datedata[i].getHours()).padStart(2, "0");
+                        const minutes = String(datedata[i].getMinutes()).padStart(2, "0");
+                        const seconds = String(datedata[i].getSeconds()).padStart(2, "0");
+
+                        datedata[i] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    }
+
+                    $('#popup_date').text(datedata[0] + " - " + datedata[1]);
+
+                    if(popupLayer.style.display === "block"){
+                        document.addEventListener("click", function(event) {
+                            if (event.target.id == "popup_layer"
+                                && popupLayer.contains(event.target)) {
+                                popupLayer.style.display = "none";
+                            }
+                        });
+                    }
+                }
             });
             calendar.render();
 

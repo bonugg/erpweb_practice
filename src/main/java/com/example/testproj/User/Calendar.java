@@ -2,12 +2,14 @@ package com.example.testproj.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @Entity
+@Component
 @Table(name="T_MINI_CALENDAR")
 public class Calendar {
     @Id
@@ -15,6 +17,8 @@ public class Calendar {
     private long CALNO;
     @Column
     private String TITLE;
+    @Column
+    private String DESCRIPTION;
     @Column(name = "CALSTART")
     private String start;
     @Column(name = "CALEND")
@@ -23,7 +27,23 @@ public class Calendar {
     private String DEPT;
     @Column(name = "CLASSIFY")
     private String CLASSIFY;
+    @Column(name = "VACATIONTYPE")
+    private String VACATIONTYPE;
+    @Column(name = "VNO")
+    private long VNO;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NO")
     private User user;
+
+    public Calendar(String TITLE, String DESCRIPTION, String start, String end, String DEPT, String CLASSIFY, String VACATIONTYPE, long VNO, User user) {
+        this.TITLE = TITLE;
+        this.DESCRIPTION = DESCRIPTION;
+        this.start = start;
+        this.end = end;
+        this.DEPT = DEPT;
+        this.CLASSIFY = CLASSIFY;
+        this.VACATIONTYPE = VACATIONTYPE;
+        this.VNO = VNO;
+        this.user = user;
+    }
 }

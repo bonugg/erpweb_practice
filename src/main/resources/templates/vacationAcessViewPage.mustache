@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/vacation.css">
+    <title>Document</title>
+</head>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td>{{user.NAME}}</td>
+                        <th>사번</th>
+                        <td>{{user.CNO}}</td>
+                    </tr>
+                    <tr>
+                        <th>부서</th>
+                        <td>{{user.DEPT}}</td>
+                        <th>휴가 구분</th>
+                        <td>{{userVacation.VACATIONTYPE}}</td>
+                    </tr>
+                    <tr>
+                        <th>휴가 시작일</th>
+                        <td>{{userVacation.start}}</td>
+                        <th>휴가 종료일</th>
+                        <td>{{userVacation.end}}</td>
+                    </tr>
+                    <tr style="height: 300px">
+                        <th>휴가 내용</th>
+                        <td colspan="3">{{userVacation.DESCRIPTION}}</td>
+                    </tr>
+                </table>
+        <div id="vacationAcess_btn_div">
+            <button onclick="Accessva('{{userVacation.VNO}}','{{user.DEPT}}')" class="vacationAcess_btn">승인</button>
+            <button onclick="Cancle('{{userVacation.VNO}}','{{user.DEPT}}')" class="vacationAcess_btn2">반려</button>
+            <button onclick="location.href='/vacationAcess'" class="vacationAcess_btn2">이전으로</button>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/vacation.js"></script>
+</html>

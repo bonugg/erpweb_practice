@@ -10,6 +10,9 @@
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js'></script>
     <script src='js/locales/ko.global.min.js'></script>
+    <script src='https://apis.google.com/js/api.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
 <body>
 {{>header/header}}
 <div id="fullscreen">
@@ -30,13 +33,31 @@
         <div id="screen2-1">
             <div id="cal_btn_div">
                 <button class="cal_btn" id="all">전체보기</button>
-                <button class="cal_btn" id="vacation" style="margin-left: 5px">휴가</button>
-                <button class="cal_btn" id="meeting" style="margin-left: 5px">회의</button>
-                <button class="cal_btn" id="business" style="margin-left: 5px">출장</button>
+                <button class="cal_btn" id="vacation" style="margin-left: 5px"><div id="circle_vacation"></div>휴가</button>
+                <button class="cal_btn" id="meeting" style="margin-left: 5px"><div id="circle_meeting"></div>회의</button>
+                <button class="cal_btn" id="business" style="margin-left: 5px"><div id="circle_business"></div>출장</button>
             </div>
             <div id="cal_div">
                 <div id='calendar'></div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="popup_layer" id="popup_layer" style="display: none;">
+    <div class="popup_box">
+        <!--팝업 컨텐츠 영역-->
+        <div class="popup_cont">
+            <div id="popup_vacationtype_div"></div>
+            <div id="popup_title_div">
+                    <p id="popup_title"></p>
+            </div>
+            <div id="popup_date_div">
+                <p id="popup_date"></p>
+            </div>
+            <div id="popup_desc_div">
+                <p id="popup_desc"></p>
+            </div>
+
         </div>
     </div>
 </div>

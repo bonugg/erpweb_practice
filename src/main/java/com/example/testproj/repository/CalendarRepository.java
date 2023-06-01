@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
+    Optional<Calendar> findByVNO(long VNO);
     List<Calendar> findByDEPT(String DEPT);
 }

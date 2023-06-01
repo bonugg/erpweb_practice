@@ -65,13 +65,6 @@ public class MainController {
         return count;
     }
 
-    @GetMapping("/vacation")
-    public String vacation(Model model) {
-        if (httpSession.getAttribute("user") != null) {
-            SessionUser user = (SessionUser) httpSession.getAttribute("user");
-            model.addAttribute("user", user);
-        }
-        return "vacationPage";
-    }
+
 
 }

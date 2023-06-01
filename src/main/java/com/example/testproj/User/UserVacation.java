@@ -1,13 +1,16 @@
 package com.example.testproj.User;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="T_MINI_MEMBER_VACATION")
@@ -16,11 +19,20 @@ public class UserVacation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long VNO;
     @Column
-    private String DEPT;
+    private String TITLE;
+    @Column(name = "VACATIONTYPE")
+    private String VACATIONTYPE;
+    @Column(name = "CALSTART")
+    private String start;
+    @Column(name = "CALEND")
+    private String end;
     @Column
-    private long CNO;
+    private String DESCRIPTION;
+    @ColumnDefault("'미승인'")
+    private String Accessva ;
     @Column
-    private String NAME;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Calendar> calendarList = new ArrayList<>();
+    private String CLASSIFY;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NO")
+    private User user;
 }

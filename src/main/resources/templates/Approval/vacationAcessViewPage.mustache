@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/vacation.css">
+    <title>Document</title>
+</head>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+        <p id="hidden_p">{{templateData.userList.this.0.Accessva}}</p>
+        <table>
+            <tr>
+                <th>이름</th>
+                <td>{{templateData.userList.this.1.NAME}}</td>
+                <th>사번</th>
+                <td>{{templateData.userList.this.1.CNO}}</td>
+            </tr>
+            <tr>
+                <th>부서</th>
+                <td>{{templateData.userList.this.1.DEPT}}</td>
+                <th>휴가 구분</th>
+                <td>{{templateData.userList.this.0.VACATIONTYPE}}</td>
+            </tr>
+            <tr>
+                <th>휴가 시작일</th>
+                <td>{{templateData.userList.this.0.start}}</td>
+                <th>휴가 종료일</th>
+                <td>{{templateData.userList.this.0.end}}</td>
+            </tr>
+            <tr style="height: 300px">
+                <th>휴가 내용</th>
+                <td colspan="3">{{templateData.userList.this.0.DESCRIPTION}}</td>
+            </tr>
+            {{#templateData.userList.this.0.CANCLEREASON}}
+                <tr style="height: 150px">
+                    <th>반려 이유</th>
+                    <td colspan="3">{{templateData.userList.this.0.CANCLEREASON}}</td>
+                </tr>
+            {{/templateData.userList.this.0.CANCLEREASON}}
+        </table>
+        <div id="vacationAcess_btn_div">
+
+            {{#isTeamleader}}
+                <button onclick="Accessva('{{templateData.userList.this.0.VNO}}','{{templateData.userList.this.1.DEPT}}','{{templateData.userList.this.0.CLASSIFY}}')"
+                        class="vacationAcess_btn" id="access_btn">승인
+                </button>
+                <button class="vacationAcess_btn2" id="cancle_btn">반려</button>
+                <button onclick="location.href='/managerAcess'" class="vacationAcess_btn2">이전으로</button>
+
+            {{/isTeamleader}}
+
+            {{#isTeammember}}
+                <button onclick="location.href='/userAcess'" class="vacationAcess_btn2">이전으로</button>
+            {{/isTeammember}}
+        </div>
+    </div>
+</div>
+<div class="popup_layer" id="popup_layer" style="display: none;">
+    <div class="popup_box">
+        <!--팝업 컨텐츠 영역-->
+        <div class="popup_cont">
+            <div id="popup_vacationtype_div"></div>
+            <div id="popup_title_div">
+                <p id="popup_title">반려 이유를 작성해주세요.</p>
+            </div>
+            <div id="popup_desc_div">
+                <textarea id="cancle_reason_text"></textarea>
+            </div>
+            <div id="popup_date_div">
+                <button onclick="Cancle('{{templateData.userList.this.0.VNO}}','{{templateData.userList.this.0.CLASSIFY}}',document.getElementById('cancle_reason_text').value)"
+                        class="cancle_btn_submit" id="cancle_btn">반려
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/vacation.js"></script>
+</html>

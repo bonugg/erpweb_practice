@@ -25,7 +25,7 @@ public class MeetingController {
 
     @GetMapping("/meeting")
     public String meeting() {
-        return "meetingPage";
+        return "Approval/meetingPage";
     }
 
     @PostMapping("/meeting/add")
@@ -40,6 +40,6 @@ public class MeetingController {
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("userList", userVacation); // Map에 데이터를 직접 담음
         model.addAttribute("templateData", templateData);
-        return "meetingAcessViewPage";
+        return "Approval/meetingAcessViewPage";
     }
 }

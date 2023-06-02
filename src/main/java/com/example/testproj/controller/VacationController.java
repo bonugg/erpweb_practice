@@ -24,7 +24,7 @@ public class VacationController {
 
     @GetMapping("/vacation")
     public String vacation(Model model) {
-        return "vacationPage";
+        return "Approval/vacationPage";
     }
 
     @PostMapping("/vacation/add")
@@ -40,6 +40,6 @@ public class VacationController {
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("userList", userVacation); // Map에 데이터를 직접 담음
         model.addAttribute("templateData", templateData);
-        return "vacationAcessViewPage";
+        return "Approval/vacationAcessViewPage";
     }
 }

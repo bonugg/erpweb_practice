@@ -1,3 +1,25 @@
+let popupLayer = document.getElementById("popup_layer");
+
+$('.Accessva_cls').each(function() {
+    if ($(this).text() === "승인") {
+        $(this).css("color", "cornflowerblue");
+    } else {
+        $(this).css("color", "indianred");
+    }
+});
+
+$('#cancle_btn').on('click', function () {
+    popupLayer.style.display = "block";
+    if(popupLayer.style.display === "block"){
+        document.addEventListener("click", function(event) {
+            if (event.target.id == "popup_layer"
+                && popupLayer.contains(event.target)) {
+                popupLayer.style.display = "none";
+            }
+        });
+    }
+});
+
 $(".meeting_td").css("display", "none");
 $(".business_td").css("display", "none");
 $('#vacation').on('click', function () {
@@ -32,11 +54,20 @@ const showmeetingview = (VNO) => {
 const showbusinessiew = (VNO) => {
     location.href = "/businessAcessView?VNO=" + VNO;
 }
+const vacationview = (VNO) => {
+    location.href = "/vacationView?VNO=" + VNO;
+}
+const meetingview = (VNO) => {
+    location.href = "/meetingView?VNO=" + VNO;
+}
+const businessiew = (VNO) => {
+    location.href = "/businessView?VNO=" + VNO;
+}
 const Accessva = (VNO, DEPT, CLASSIFY) => {
     location.href = "/Access?VNO=" + VNO + "&DEPT=" + DEPT + "&CLASSIFY=" + CLASSIFY;
 }
-const Cancle = (VNO, CLASSIFY) => {
-    location.href = "/Cancle?VNO=" + VNO + "&CLASSIFY=" + CLASSIFY;
+const Cancle = (VNO, CLASSIFY, CANCLEREASON) => {
+    location.href = "/Cancle?VNO=" + VNO + "&CLASSIFY=" + CLASSIFY + "&CANCLEREASON=" + CANCLEREASON;
 }
 
 

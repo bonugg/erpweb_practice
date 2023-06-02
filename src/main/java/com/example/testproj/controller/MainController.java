@@ -88,7 +88,7 @@ public class MainController {
             meetingtListData.put("meetingList", meetingtList); // Map에 데이터를 직접 담음
             model.addAttribute("meetingtListData", meetingtListData);
         }
-        return "userAcessPage";
+        return "Approval/userAcessPage";
     }
 
     @GetMapping("/managerAcess")
@@ -111,13 +111,14 @@ public class MainController {
             meetingtListData.put("meetingList", meetingtList); // Map에 데이터를 직접 담음
             model.addAttribute("meetingtListData", meetingtListData);
         }
-        return "managerAcessPage";
+        return "Approval/managerAcessPage";
     }
 
     @GetMapping("/Access")
     public String Access(@RequestParam("VNO") long VNO, @RequestParam("DEPT") String DEPT, @RequestParam("CLASSIFY") String CLASSIFY, Model model) {
         if (CLASSIFY.equals("휴가")) {
             Vacation vacation = vacationRepository.findByVNO(VNO);
+            vacation.setCANCLEREASON(null);
             vacation.setAccessva("승인");
             Optional<Calendar> optional = calendarRepository.findByVNO(vacation.getVNO());
             if (optional.isPresent()) { //데이터가 있으면 실행
@@ -131,6 +132,7 @@ public class MainController {
             }
         } else if (CLASSIFY.equals("회의")) {
             Meeting meeting = meetingRepository.findByVNO(VNO);
+            meeting.setCANCLEREASON(null);
             meeting.setAccessva("승인");
             Optional<Calendar> optional = calendarRepository.findByMNO(meeting.getVNO());
             if (optional.isPresent()) { //데이터가 있으면 실행
@@ -144,6 +146,7 @@ public class MainController {
             }
         } else {
             Business business = businessRepository.findByVNO(VNO);
+            business.setCANCLEREASON(null);
             business.setAccessva("승인");
             Optional<Calendar> optional = calendarRepository.findByBNO(business.getVNO());
             if (optional.isPresent()) { //데이터가 있으면 실행
@@ -160,9 +163,10 @@ public class MainController {
     }
 
     @GetMapping("/Cancle")
-    public String Cancle(@RequestParam("VNO") long VNO, @RequestParam("CLASSIFY") String CLASSIFY) {
+    public String Cancle(@RequestParam("VNO") long VNO, @RequestParam("CLASSIFY") String CLASSIFY, @RequestParam("CANCLEREASON") String CANCLEREASON) {
         if (CLASSIFY.equals("휴가")) {
             Vacation vacation = vacationRepository.findByVNO(VNO);
+            vacation.setCANCLEREASON(CANCLEREASON);
             vacation.setAccessva("반려");
             vacationRepository.save(vacation);
             Optional<Calendar> optional = calendarRepository.findByVNO(vacation.getVNO());
@@ -175,6 +179,7 @@ public class MainController {
             }
         } else if (CLASSIFY.equals("회의")) {
             Meeting meeting = meetingRepository.findByVNO(VNO);
+            meeting.setCANCLEREASON(CANCLEREASON);
             meeting.setAccessva("반려");
             meetingRepository.save(meeting);
             Optional<Calendar> optional = calendarRepository.findByMNO(meeting.getVNO());
@@ -187,6 +192,7 @@ public class MainController {
             }
         }else{
             Business business = businessRepository.findByVNO(VNO);
+            business.setCANCLEREASON(CANCLEREASON);
             business.setAccessva("반려");
             businessRepository.save(business);
             Optional<Calendar> optional = calendarRepository.findByBNO(business.getVNO());

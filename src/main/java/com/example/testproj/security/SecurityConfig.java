@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
-                .antMatchers("/managerAcess","/vacationAcessView","/meetingAcessView", "businessAcessView", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
+                .antMatchers("/managerAcess", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
                 .anyRequest().authenticated();
 
         http

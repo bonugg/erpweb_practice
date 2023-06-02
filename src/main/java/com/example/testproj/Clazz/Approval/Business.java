@@ -1,27 +1,24 @@
-package com.example.testproj.User;
+package com.example.testproj.Clazz.Approval;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import com.example.testproj.Clazz.User.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="T_MINI_MEMBER_VACATION")
-public class UserVacation {
+@Table(name="T_MINI_BUSINESS")
+public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long VNO;
     @Column
     private String TITLE;
-    @Column(name = "VACATIONTYPE")
-    private String VACATIONTYPE;
     @Column(name = "CALSTART")
     private String start;
     @Column(name = "CALEND")

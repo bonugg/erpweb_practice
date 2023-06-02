@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/vacation.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+        <div id="btn_access_div">
+            <button class="cal_btn" id="vacation">휴가</button>
+            <button class="cal_btn" id="meeting" style="margin-left: 5px">회의</button>
+            <button class="cal_btn" id="business" style="margin-left: 5px">출장</button>
+
+        </div>
+        <table class="vacation_td">
+            <script>var index = 1;</script>
+            {{#vacationListtData.vacationList}}
+                <tr>
+                    <td>
+                        <script>document.write(index++);</script>
+                    </td>
+                    <td>
+                        {{this.1}}
+                    </td>
+                    <td class="title_td">
+                        <a onclick="vacationview('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
+                    </td>
+                    <td>
+                        {{this.0.start}}
+                    </td>
+                    <td>
+                        {{this.0.end}}
+                    </td>
+                    <td>
+                        {{this.0.Accessva}}
+                    </td>
+                </tr>
+            {{/vacationListtData.vacationList}}
+        </table>
+        <table class="meeting_td">
+            <script>var index2 = 1;</script>
+            {{#meetingtListData.meetingList}}
+                <tr>
+                    <td>
+                        <script>document.write(index2++);</script>
+                    </td>
+                    <td>
+                        {{this.1}}
+                    </td>
+                    <td class="title_td">
+                        <a onclick="meetingview('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
+                    </td>
+                    <td>
+                        {{this.0.start}}
+                    </td>
+                    <td>
+                        {{this.0.end}}
+                    </td>
+                    <td>
+                        {{this.0.Accessva}}
+                    </td>
+                </tr>
+            {{/meetingtListData.meetingList}}
+        </table>
+        <table class="business_td">
+            <script>var index3 = 1;</script>
+            {{#businesstListData.businesstList}}
+                <tr>
+                    <td>
+                        <script>document.write(index3++);</script>
+                    </td>
+                    <td>
+                        {{this.1}}
+                    </td>
+                    <td class="title_td">
+                        <a onclick="businessiew('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
+                    </td>
+                    <td>
+                        {{this.0.start}}
+                    </td>
+                    <td>
+                        {{this.0.end}}
+                    </td>
+                    <td>
+                        {{this.0.Accessva}}
+                    </td>
+                </tr>
+            {{/businesstListData.businesstList}}
+        </table>
+    </div>
+</div>
+</body>
+<script src="js/vacation.js"></script>
+</html>

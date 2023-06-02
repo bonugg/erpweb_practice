@@ -17,9 +17,15 @@
             <li id="logo_li">
                 <a id="logo_text" href="/">BIT ERP</a>
                 <a id="menu_text" href="/vacation">휴가</a>
-                <a id="menu_text" href="/">회의</a>
-                <a id="menu_text" href="/">출장</a>
-                <a id="menu_text" href="/vacationAcess">휴가 승인</a>
+                <a id="menu_text" href="/meeting">회의</a>
+                <a id="menu_text" href="/business">출장</a>
+                {{#isTeamleader}}
+                    <a id="menu_text" href="/userAcess">신청한 결재</a>
+                    <a id="menu_text" href="/managerAcess">승인요청 목록</a>
+                {{/isTeamleader}}
+                {{#isTeammember}}
+                    <a id="menu_text" href="/userAcess">신청한 결재</a>
+                {{/isTeammember}}
             </li>
             {{#user.CNO}}
             <li id="login_sigin_li">

@@ -1,8 +1,8 @@
 package com.example.testproj.controller;
 
-import com.example.testproj.Clazz.Approval.Vacation;
+import com.example.testproj.Clazz.Approval.Meeting;
 import com.example.testproj.repository.CalendarRepository;
-import com.example.testproj.repository.VacationRepository;
+import com.example.testproj.repository.MeetingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class VacationController {
+public class MeetingController {
     @Autowired
     private HttpSession httpSession;
-    private final VacationRepository vacationRepository;
+    private final MeetingRepository meetingRepository;
     private final CalendarRepository calendarRepository;
 
-    @GetMapping("/vacation")
-    public String vacation(Model model) {
-        return "vacationPage";
+    @GetMapping("/meeting")
+    public String meeting() {
+        return "meetingPage";
     }
 
-    @PostMapping("/vacation/add")
-    public String vacationadd(Vacation vacation) {
-        vacation.setTITLE(vacation.getTITLE().concat(" " + vacation.getVACATIONTYPE()));
-        vacationRepository.save(vacation);
+    @PostMapping("/meeting/add")
+    public String meetingadd(Meeting meeting) {
+        meetingRepository.save(meeting);
         return "redirect:/";
     }
 
-    @GetMapping("/vacationAcessView")
+    @GetMapping("/meetingAcessView")
     public String vacationAcessView(@RequestParam("VNO") long VNO, Model model) {
-        Object userVacation = vacationRepository.findByVNOView(VNO);
+        Object userVacation = meetingRepository.findByVNOView(VNO);
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("userList", userVacation); // Map에 데이터를 직접 담음
         model.addAttribute("templateData", templateData);
-        return "vacationAcessViewPage";
+        return "meetingAcessViewPage";
     }
 }

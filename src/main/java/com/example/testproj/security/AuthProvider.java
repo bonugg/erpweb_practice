@@ -1,7 +1,7 @@
 package com.example.testproj.security;
 
-import com.example.testproj.User.SessionUser;
-import com.example.testproj.User.User;
+import com.example.testproj.Clazz.User.SessionUser;
+import com.example.testproj.Clazz.User.User;
 import com.example.testproj.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -47,8 +46,11 @@ public class AuthProvider implements AuthenticationProvider {
 
             if (user != null && passwordEncoder.matches(PWD, user.getPWD())) { // 일치하는 user 정보가 있는지 확인
                 List<GrantedAuthority> roles = new ArrayList<>();
-                roles.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여
-
+                if(user.getPOSITION().equals("팀장")){
+                    roles.add(new SimpleGrantedAuthority("ROLE_MANAGER")); // 권한 부여
+                }else {
+                    roles.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여
+                }
                 token = new UsernamePasswordAuthenticationToken(user.getCNO(), null, roles);
                 httpSession.setAttribute("user", new SessionUser(user));
 

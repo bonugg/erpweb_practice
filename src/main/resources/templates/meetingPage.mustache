@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/siginin.css">
+</head>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+        <form action="/meeting/add" method="POST" id="vacation_form">
+            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+            <input type="hidden" name="user" value="{{user.NO}}">
+            <input type="hidden" name="Accessva" value="미승인">
+            <input type="text" name="NAME" readOnly value="{{user.NAME}}">
+            <br>
+            <input type="text" name="CNO" readOnly value="{{user.CNO}}">
+            <br>
+            <input type="text" name="DEPT" readOnly value="{{user.DEPT}}">
+            <br>
+            <label for="start_date">회의 제목:</label>
+            <input type="text" name="TITLE" required/>
+            <br>
+
+            <label for="start_date">회의 시작 시간:</label>
+            <input type="datetime-local" id="start" name="start" required/>
+
+            <label for="end_date">회의 종료 시간:</label>
+            <input type="datetime-local" id="end" name="end" required/>
+            <br>
+
+            <label for="reason">회의 내용</label>
+            <textarea id="reason" name="DESCRIPTION" required></textarea>
+            <br>
+            <input type="hidden" name="CLASSIFY" value="회의">
+            <br>
+
+            <input type="submit" value="제출">
+        </form>
+
+    </div>
+</div>
+<script src="js/vacation.js"></script>
+</body>
+</html>

@@ -1,7 +1,9 @@
-package com.example.testproj.User;
+package com.example.testproj.Clazz.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.example.testproj.Clazz.Approval.Business;
+import com.example.testproj.Clazz.calendar.Calendar;
+import com.example.testproj.Clazz.Approval.Meeting;
+import com.example.testproj.Clazz.Approval.Vacation;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,13 +30,16 @@ public class User {
     private String PWD;
     @Column
     private String EMAIL;
-    @Enumerated(EnumType.STRING)
     @Column
-    private Role role;
+    private String POSITION;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Calendar> calendarList = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<UserVacation> userVacationList = new ArrayList<>();
+    private List<Vacation> vacationList = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Meeting> meetingList = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Business> businessList = new ArrayList<>();
 
     public User(SessionUser user) {
         this.NO = user.getNO();
@@ -43,6 +48,5 @@ public class User {
         this.NAME = user.getNAME();
         this.PWD = user.getPWD();
         this.EMAIL = user.getEMAIL();
-        this.role = user.getRole();
     }
 }

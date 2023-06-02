@@ -1,12 +1,44 @@
-const showUserList = (VNO) => {
+$(".meeting_td").css("display", "none");
+$(".business_td").css("display", "none");
+$('#vacation').on('click', function () {
+    $(".vacation_td").css("display", "");
+    $(".meeting_td").css("display", "none");
+    $(".business_td").css("display", "none");
+});
+$('#meeting').on('click', function () {
+    $(".meeting_td").css("display", "");
+    $(".vacation_td").css("display", "none");
+    $(".business_td").css("display", "none");
+});
+$('#business').on('click', function () {
+    $(".business_td").css("display", "");
+    $(".vacation_td").css("display", "none");
+    $(".meeting_td").css("display", "none");
+});
+if ($('#hidden_p').text() === "승인") {
+    $('#access_btn').prop('disabled', true);
+}
+if ($('#hidden_p').text() === "반려") {
+    $('#cancle_btn').prop('disabled', true);
+}
+
+
+const showvacationview = (VNO) => {
     location.href = "/vacationAcessView?VNO=" + VNO;
 }
-const Accessva = (VNO, DEPT) => {
-    location.href = "/Access?VNO=" + VNO + "&DEPT=" + DEPT;
+const showmeetingview = (VNO) => {
+    location.href = "/meetingAcessView?VNO=" + VNO;
 }
-const Cancle = (VNO, DEPT) => {
-    location.href = "/Cancle?VNO=" + VNO + "&DEPT=" + DEPT;
+const showbusinessiew = (VNO) => {
+    location.href = "/businessAcessView?VNO=" + VNO;
 }
+const Accessva = (VNO, DEPT, CLASSIFY) => {
+    location.href = "/Access?VNO=" + VNO + "&DEPT=" + DEPT + "&CLASSIFY=" + CLASSIFY;
+}
+const Cancle = (VNO, CLASSIFY) => {
+    location.href = "/Cancle?VNO=" + VNO + "&CLASSIFY=" + CLASSIFY;
+}
+
 
 const leave_type = document.getElementById('leave_type');
 const start_date = document.getElementById('start');

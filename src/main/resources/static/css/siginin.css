@@ -100,3 +100,6 @@ input[type="text"]:focus, input[type="password"]:focus{
 .button_sign_cancle:disabled:hover{
     background-color: lightgray;
 }
+label{
+    font-size: 10px;
+}

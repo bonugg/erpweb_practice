@@ -3,8 +3,11 @@ package com.example.testproj.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -15,7 +18,6 @@ public class SecurityConfig {
 
     /* 로그인 실패 핸들러 의존성 주입 */
     private final AuthenticationFailureHandler customFailureHandler;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -30,6 +32,7 @@ public class SecurityConfig {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
+                .antMatchers("/managerAcess","/vacationAcessView","/meetingAcessView", "businessAcessView", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
                 .anyRequest().authenticated();
 
         http
@@ -48,6 +51,9 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
+        http
+                .exceptionHandling()
+                .accessDeniedPage("/");
         return http.build();
     }
 }

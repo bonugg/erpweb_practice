@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/siginin.css">
+</head>
+<body>
+{{>header/header}}
+<div id="fullscreen">
+    <div id="screen1">
+        <form action="/business/add" method="POST" id="vacation_form">
+            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+            <input type="hidden" name="user" value="{{user.NO}}">
+            <input type="hidden" name="Accessva" value="미승인">
+            <input type="hidden" name="TITLE" value="{{user.NAME}} 출장">
+            <input type="text" name="NAME" readOnly value="{{user.NAME}}">
+            <br>
+            <input type="text" name="CNO" readOnly value="{{user.CNO}}">
+            <br>
+            <input type="text" name="DEPT" readOnly value="{{user.DEPT}}">
+            <br>
+
+            <label for="start_date">출장 출발 날짜:</label>
+            <input type="date" id="start" name="start" required/>
+
+            <label for="end_date">출장 복귀 날짜:</label>
+            <input type="date" id="end" name="end" required/>
+            <br>
+
+            <label for="reason">출장 내용</label>
+            <textarea id="reason" name="DESCRIPTION" required></textarea>
+            <br>
+            <input type="hidden" name="CLASSIFY" value="출장">
+            <br>
+
+            <input type="submit" value="제출">
+        </form>
+
+    </div>
+</div>
+<script src="js/vacation.js"></script>
+</body>
+</html>

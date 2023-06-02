@@ -1,24 +1,18 @@
 package com.example.testproj.controller;
 
-import com.example.testproj.User.Calendar;
-import com.example.testproj.User.SessionUser;
-import com.example.testproj.User.User;
+import com.example.testproj.Clazz.calendar.Calendar;
+import com.example.testproj.Clazz.User.SessionUser;
 import com.example.testproj.repository.CalendarRepository;
-import com.example.testproj.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

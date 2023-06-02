@@ -1,4 +1,4 @@
-package com.example.testproj.User;
+package com.example.testproj.Clazz.User;
 
 import lombok.Data;
 
@@ -15,8 +15,8 @@ public class SessionUser {
     private String PWD;
 
     private String EMAIL;
+    private String POSITION;
 
-    private Role role;
 
     public SessionUser(User user){
         this.NO = user.getNO();
@@ -25,7 +25,7 @@ public class SessionUser {
         this.NAME = user.getNAME();
         this.PWD = user.getPWD();
         this.EMAIL = user.getEMAIL();
-        this.role = user.getRole();
+        this.POSITION = user.getPOSITION();
     }
 }
 

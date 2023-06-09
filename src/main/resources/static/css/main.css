@@ -26,12 +26,95 @@
     height: 69%;
     margin-right: 5px;
     margin-bottom: 5px;
+    display: flex;
+    align-items: flex-end;
+}
+#screen1-1-1-1{
+    width: 100%;
+    height: 94%;
+}
+#screen1-1-1-2{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+#screen1-1-1-2 a{
+    font-size: 15px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+}
+#screen1-1-1-3{
+    margin-top: 5px;
+    width: 100%;
+    height: 78%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+#screen1-1-1-4{
+    margin: 10px auto;
+    width: 93%;
+    height: 43%;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#screen1-1-1-4-1{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#screen1-1-1-4-1 a{
+    font-size: 15px;
+    font-family: 'Gowun Dodum', sans-serif;
+
+}
+#screen1-1-1-4-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+#on{
+    width: 60px;
+    height: 60px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+}
+#off{
+    width: 60px;
+    height: 60px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+}
+#screen1-1-1-5{
+    margin: auto;
+    width: 93%;
+    height: 43%;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #screen1-2-1{
     width: 50%;
     height: 69%;
     margin-right: 5px;
     margin-top: 5px;
+    background-color: lightgray;
 }
 #screen2{
     width: 60%;

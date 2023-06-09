@@ -18,82 +18,28 @@
             <button class="cal_btn" id="vacation">휴가</button>
             <button class="cal_btn" id="meeting" style="margin-left: 5px">회의</button>
             <button class="cal_btn" id="business" style="margin-left: 5px">출장</button>
-
         </div>
-        <table class="vacation_td">
-            <script>var index = 1;</script>
-            {{#vacationListtData.vacationList}}
-                <tr>
-                    <td>
-                        <script>document.write(index++);</script>
-                    </td>
-                    <td>
-                        {{this.1}}
-                    </td>
-                    <td class="title_td">
-                        <a onclick="showvacationview('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
-                    </td>
-                    <td>
-                        {{this.0.start}}
-                    </td>
-                    <td>
-                        {{this.0.end}}
-                    </td>
-                    <td class="Accessva_cls">{{this.0.Accessva}}</td>
-                </tr>
-            {{/vacationListtData.vacationList}}
+        <table id="table-body">
         </table>
-        <table class="meeting_td">
-            <script>var index2 = 1;</script>
-            {{#meetingtListData.meetingList}}
-                <tr>
-                    <td>
-                        <script>document.write(index2++);</script>
-                    </td>
-                    <td>
-                        {{this.1}}
-                    </td>
-                    <td>
-                        {{this.2}}
-                    </td>
-                    <td class="title_td">
-                        <a onclick="showmeetingview('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
-                    </td>
-                    <td>
-                        {{this.0.start}}
-                    </td>
-                    <td>
-                        {{this.0.end}}
-                    </td>
-                    <td class="Accessva_cls">{{this.0.Accessva}}</td>
-                </tr>
-            {{/meetingtListData.meetingList}}
-        </table>
-        <table class="business_td">
-            <script>var index3 = 1;</script>
-            {{#businesstListData.businesstList}}
-                <tr>
-                    <td>
-                        <script>document.write(index3++);</script>
-                    </td>
-                    <td>
-                        {{this.1}}
-                    </td>
-                    <td class="title_td">
-                        <a onclick="showbusinessiew('{{this.0.VNO}}')">{{this.0.TITLE}}</a>
-                    </td>
-                    <td>
-                        {{this.0.start}}
-                    </td>
-                    <td>
-                        {{this.0.end}}
-                    </td>
-                    <td class="Accessva_cls">{{this.0.Accessva}}</td>
-                </tr>
-            {{/businesstListData.businesstList}}
-        </table>
+
+        <div id="pagination" style="display: none; justify-content: center">
+            <button id="prev" class="nextprev" style="margin-right: 5px"><</button>
+            <div id="pageNumbersContainer"></div>
+            <button id="next" class="nextprev">></button>
+        </div>
+        <div id="pagination2" style="display: none; justify-content: center">
+            <button id="prev2" class="nextprev" style="margin-right: 5px"><</button>
+            <div id="pageNumbersContainer2"></div>
+            <button id="next2" class="nextprev">></button>
+        </div>
+        <div id="pagination3" style="display: none; justify-content: center">
+            <button id="prev3" class="nextprev" style="margin-right: 5px"><</button>
+            <div id="pageNumbersContainer3"></div>
+            <button id="next3" class="nextprev">></button>
+        </div>
+
     </div>
 </div>
 </body>
-<script src="js/vacation.js"></script>
+<script src="js/managerAccess.js"></script>
 </html>

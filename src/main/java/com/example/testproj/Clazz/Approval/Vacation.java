@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name="T_MINI_VACATION")
+@NamedEntityGraph(name = "Vacation.fetchUser", attributeNodes = @NamedAttributeNode("user"))
 public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +32,25 @@ public class Vacation {
     private String CLASSIFY;
     @Column
     private String CANCLEREASON;
+    @Column
+    private String APPROVER;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NO")
     private User user;
+
+    @Override
+    public String toString() {
+        return "Vacation{" +
+                "VNO=" + VNO +
+                ", TITLE='" + TITLE + '\'' +
+                ", VACATIONTYPE='" + VACATIONTYPE + '\'' +
+                ", start='" + start + '\'' +
+                ", end='" + end + '\'' +
+                ", DESCRIPTION='" + DESCRIPTION + '\'' +
+                ", Accessva='" + Accessva + '\'' +
+                ", CLASSIFY='" + CLASSIFY + '\'' +
+                ", CANCLEREASON='" + CANCLEREASON + '\'' +
+                ", APPROVER='" + APPROVER + '\'' +
+                '}';
+    }
 }

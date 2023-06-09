@@ -1,17 +1,9 @@
 let popupLayer = document.getElementById("popup_layer");
 
-$('.Accessva_cls').each(function() {
-    if ($(this).text() === "승인") {
-        $(this).css("color", "cornflowerblue");
-    } else {
-        $(this).css("color", "indianred");
-    }
-});
-
 $('#cancle_btn').on('click', function () {
     popupLayer.style.display = "block";
-    if(popupLayer.style.display === "block"){
-        document.addEventListener("click", function(event) {
+    if (popupLayer.style.display === "block") {
+        document.addEventListener("click", function (event) {
             if (event.target.id == "popup_layer"
                 && popupLayer.contains(event.target)) {
                 popupLayer.style.display = "none";
@@ -20,23 +12,6 @@ $('#cancle_btn').on('click', function () {
     }
 });
 
-$(".meeting_td").css("display", "none");
-$(".business_td").css("display", "none");
-$('#vacation').on('click', function () {
-    $(".vacation_td").css("display", "");
-    $(".meeting_td").css("display", "none");
-    $(".business_td").css("display", "none");
-});
-$('#meeting').on('click', function () {
-    $(".meeting_td").css("display", "");
-    $(".vacation_td").css("display", "none");
-    $(".business_td").css("display", "none");
-});
-$('#business').on('click', function () {
-    $(".business_td").css("display", "");
-    $(".vacation_td").css("display", "none");
-    $(".meeting_td").css("display", "none");
-});
 if ($('#hidden_p').text() === "승인") {
     $('#access_btn').prop('disabled', true);
 }
@@ -76,7 +51,7 @@ const start_date = document.getElementById('start');
 const end_date = document.getElementById('end');
 
 
-leave_type.addEventListener('change', function() {
+leave_type.addEventListener('change', function () {
     if (leave_type.value === '반차') {
         start_date.type = 'datetime-local';  // 반차인 경우, input 타입을 datetime-local로 변경
         end_date.type = 'datetime-local';  // 반차인 경우, input 타입을 datetime-local로 변경
@@ -85,3 +60,4 @@ leave_type.addEventListener('change', function() {
         end_date.type = 'date';  // 그 외의 경우, input 타입을 date로 변경
     }
 });
+

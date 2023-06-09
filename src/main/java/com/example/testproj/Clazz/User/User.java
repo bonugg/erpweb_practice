@@ -12,7 +12,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "T_MINI_MEMBER")
@@ -48,5 +47,18 @@ public class User {
         this.NAME = user.getNAME();
         this.PWD = user.getPWD();
         this.EMAIL = user.getEMAIL();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "NO=" + NO +
+                ", DEPT='" + DEPT + '\'' +
+                ", CNO=" + CNO +
+                ", NAME='" + NAME + '\'' +
+                ", PWD='" + PWD + '\'' +
+                ", EMAIL='" + EMAIL + '\'' +
+                ", POSITION='" + POSITION + '\'' +
+                '}';
     }
 }

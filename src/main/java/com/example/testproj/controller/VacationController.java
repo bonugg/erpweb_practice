@@ -5,6 +5,7 @@ import com.example.testproj.repository.CalendarRepository;
 import com.example.testproj.repository.VacationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,13 @@ public class VacationController {
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("userList", userVacation); // Map에 데이터를 직접 담음
         model.addAttribute("templateData", templateData);
+
+        Object[] arr = (Object[]) userVacation;
+        Vacation vacation = (Vacation) arr[0];
+        if(vacation.getAccessva().equals("승인")){
+            model.addAttribute("isAccessva", true);
+        }
+
         return "Approval/vacationAcessViewPage";
     }
 }

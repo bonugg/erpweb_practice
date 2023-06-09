@@ -31,6 +31,8 @@ public class Business {
     private String CLASSIFY;
     @Column
     private String CANCLEREASON;
+    @Column
+    private String APPROVER;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NO")
     private User user;

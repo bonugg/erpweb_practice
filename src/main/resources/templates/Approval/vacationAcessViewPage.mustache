@@ -36,11 +36,21 @@
                 <th>휴가 내용</th>
                 <td colspan="3">{{templateData.userList.this.0.DESCRIPTION}}</td>
             </tr>
+            {{#isAccessva}}
+                <tr>
+                    <th>승인 결재자</th>
+                    <td colspan="3">{{templateData.userList.this.0.APPROVER}}</td>
+                </tr>
+            {{/isAccessva}}
             {{#templateData.userList.this.0.CANCLEREASON}}
                 <tr style="height: 150px">
                     <th>반려 이유</th>
                     <td colspan="3">{{templateData.userList.this.0.CANCLEREASON}}</td>
                 </tr>
+            <tr>
+                <th>반려 결재자</th>
+                <td colspan="3">{{templateData.userList.this.0.APPROVER}}</td>
+            </tr>
             {{/templateData.userList.this.0.CANCLEREASON}}
         </table>
         <div id="vacationAcess_btn_div">

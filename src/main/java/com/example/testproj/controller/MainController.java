@@ -1,11 +1,13 @@
 package com.example.testproj.controller;
 
-import com.example.testproj.Clazz.Approval.Business;
 import com.example.testproj.Clazz.User.SessionUser;
 import com.example.testproj.Clazz.User.User;
 import com.example.testproj.Clazz.calendar.Calendar;
-import com.example.testproj.Clazz.Approval.Meeting;
-import com.example.testproj.Clazz.Approval.Vacation;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import com.example.testproj.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,7 +36,10 @@ public class MainController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/")
-    public String main(Model model) {
+    public String main() {
+
+
+
         return "mainPage";
     }
 
@@ -68,6 +73,99 @@ public class MainController {
         return count;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/onadd", method = RequestMethod.POST)
+    public String onadd(HttpServletRequest request) throws Exception {
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (ip == null) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        System.out.println(ip);
+        Calendar calendar = new Calendar();
+        SessionUser user1 = (SessionUser) httpSession.getAttribute("user");
+        User user = userRepository.findByCNO(user1.getCNO()).get();
+        calendar.setUser(user);
+        calendar.setDEPT(user.getDEPT());
+        Date today = new Date();
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+        Date inputDate = inputDateFormat.parse(String.valueOf(today));
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        String outputDateString = outputDateFormat.format(inputDate);
+
+        calendar.setCLASSIFY("출퇴근");
+        calendar.setStart(outputDateString);
+        calendarRepository.save(calendar);
+
+        return outputDateString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/offadd", method = RequestMethod.POST)
+    public String offadd(@RequestParam("start") String start) throws Exception {
+        SessionUser user1 = (SessionUser) httpSession.getAttribute("user");
+        Calendar calendar = calendarRepository.findByCLASSIFYANDSTARTy(user1.getNO(),start).get();
+        Date today = new Date();
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+        Date inputDate = inputDateFormat.parse(String.valueOf(today));
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        String outputDateString = outputDateFormat.format(inputDate);
+
+        calendar.setEnd(outputDateString);
+
+        // start와 end 시간을 Date 형식으로 변환
+        SimpleDateFormat startEndDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date startDate = startEndDateFormat.parse(calendar.getStart());
+        Date endDate = startEndDateFormat.parse(outputDateString);
+
+        // start가 오전 9시 전이고 end가 오후 6시 이후인 경우
+        java.util.Calendar startDateCalendar = java.util.Calendar.getInstance();
+        startDateCalendar.setTime(startDate);
+        java.util.Calendar endDateCalendar = java.util.Calendar.getInstance();
+        endDateCalendar.setTime(endDate);
+
+        if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
+            calendar.setTITLE("출석");
+        }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
+            calendar.setTITLE("조퇴");
+        }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
+            calendar.setTITLE("지각");
+        }else {
+            calendar.setTITLE("결석");
+        }
+        calendarRepository.save(calendar);
+
+        return outputDateString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/onaddcheck", method = RequestMethod.POST) //좋아요 체크 및 좋아요 수
+    public String onaddcheck(@RequestParam("start") String start) throws Exception {
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        String startdate = calendarRepository.findByCLASSIFYANDSTART(user.getNO(),start);
+        return startdate;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/offaddcheck", method = RequestMethod.POST) //좋아요 체크 및 좋아요 수
+    public String offaddcheck(@RequestParam("end") String end) throws Exception {
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        String enddate = calendarRepository.findByCLASSIFYANDEND(user.getNO(),end);
+        return enddate;
+    }
+
     @GetMapping("/userAcess")
     public String userAcess(Model model) {
         if (httpSession.getAttribute("user") != null) {
@@ -89,120 +187,5 @@ public class MainController {
             model.addAttribute("meetingtListData", meetingtListData);
         }
         return "Approval/userAcessPage";
-    }
-
-    @GetMapping("/managerAcess")
-    public String managerAccess(Model model) {
-        if (httpSession.getAttribute("user") != null) {
-            SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
-            List<Object[]> userVacationList = vacationRepository.findByDeptList(user.getDEPT());
-            Map<String, Object> vacationListtData = new HashMap<>();
-            vacationListtData.put("vacationList", userVacationList); // Map에 데이터를 직접 담음
-            model.addAttribute("vacationListtData", vacationListtData);
-
-            List<Object[]> businesstList = businessRepository.findByDeptList(user.getDEPT());
-            Map<String, Object> businesstListData = new HashMap<>();
-            businesstListData.put("businesstList", businesstList); // Map에 데이터를 직접 담음
-            model.addAttribute("businesstListData", businesstListData);
-
-            List<Object[]> meetingtList = meetingRepository.findByDeptList(user.getDEPT());
-            Map<String, Object> meetingtListData = new HashMap<>();
-            meetingtListData.put("meetingList", meetingtList); // Map에 데이터를 직접 담음
-            model.addAttribute("meetingtListData", meetingtListData);
-        }
-        return "Approval/managerAcessPage";
-    }
-
-    @GetMapping("/Access")
-    public String Access(@RequestParam("VNO") long VNO, @RequestParam("DEPT") String DEPT, @RequestParam("CLASSIFY") String CLASSIFY, Model model) {
-        if (CLASSIFY.equals("휴가")) {
-            Vacation vacation = vacationRepository.findByVNO(VNO);
-            vacation.setCANCLEREASON(null);
-            vacation.setAccessva("승인");
-            Optional<Calendar> optional = calendarRepository.findByVNO(vacation.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-            } else {
-                vacationRepository.save(vacation);
-                Calendar calendar = new Calendar(vacation.getTITLE(), vacation.getDESCRIPTION(),
-                        vacation.getStart(), vacation.getEnd(), DEPT,
-                        vacation.getCLASSIFY(), vacation.getVACATIONTYPE(), vacation.getVNO(),
-                        vacation.getUser());
-                calendarRepository.save(calendar);
-            }
-        } else if (CLASSIFY.equals("회의")) {
-            Meeting meeting = meetingRepository.findByVNO(VNO);
-            meeting.setCANCLEREASON(null);
-            meeting.setAccessva("승인");
-            Optional<Calendar> optional = calendarRepository.findByMNO(meeting.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-            } else {
-                meetingRepository.save(meeting);
-                Calendar calendar = new Calendar(meeting.getTITLE(), meeting.getDESCRIPTION(),
-                        meeting.getStart(), meeting.getEnd(), DEPT,
-                        meeting.getCLASSIFY(), meeting.getVNO(),
-                        meeting.getUser());
-                calendarRepository.save(calendar);
-            }
-        } else {
-            Business business = businessRepository.findByVNO(VNO);
-            business.setCANCLEREASON(null);
-            business.setAccessva("승인");
-            Optional<Calendar> optional = calendarRepository.findByBNO(business.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-            } else {
-                businessRepository.save(business);
-                Calendar calendar = new Calendar(business.getTITLE(), business.getDESCRIPTION(),
-                        business.getStart(), business.getEnd(), DEPT,
-                        business.getCLASSIFY(), business.getVNO(),
-                        business.getUser());
-                calendarRepository.save(calendar);
-            }
-        }
-        return "redirect:/managerAcess";
-    }
-
-    @GetMapping("/Cancle")
-    public String Cancle(@RequestParam("VNO") long VNO, @RequestParam("CLASSIFY") String CLASSIFY, @RequestParam("CANCLEREASON") String CANCLEREASON) {
-        if (CLASSIFY.equals("휴가")) {
-            Vacation vacation = vacationRepository.findByVNO(VNO);
-            vacation.setCANCLEREASON(CANCLEREASON);
-            vacation.setAccessva("반려");
-            vacationRepository.save(vacation);
-            Optional<Calendar> optional = calendarRepository.findByVNO(vacation.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-                Calendar calendar = optional.get();
-                calendarRepository.deleteById(calendar.getCALNO());
-                return "redirect:/managerAcess";
-            } else {
-                return "redirect:/managerAcess"; //예외 처리 페이지로 리다이렉트
-            }
-        } else if (CLASSIFY.equals("회의")) {
-            Meeting meeting = meetingRepository.findByVNO(VNO);
-            meeting.setCANCLEREASON(CANCLEREASON);
-            meeting.setAccessva("반려");
-            meetingRepository.save(meeting);
-            Optional<Calendar> optional = calendarRepository.findByMNO(meeting.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-                Calendar calendar = optional.get();
-                calendarRepository.deleteById(calendar.getCALNO());
-                return "redirect:/managerAcess";
-            } else {
-                return "redirect:/managerAcess"; //예외 처리 페이지로 리다이렉트
-            }
-        }else{
-            Business business = businessRepository.findByVNO(VNO);
-            business.setCANCLEREASON(CANCLEREASON);
-            business.setAccessva("반려");
-            businessRepository.save(business);
-            Optional<Calendar> optional = calendarRepository.findByBNO(business.getVNO());
-            if (optional.isPresent()) { //데이터가 있으면 실행
-                Calendar calendar = optional.get();
-                calendarRepository.deleteById(calendar.getCALNO());
-                return "redirect:/managerAcess";
-            } else {
-                return "redirect:/managerAcess"; //예외 처리 페이지로 리다이렉트
-            }
-        }
     }
 }

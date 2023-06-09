@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 //csrf 제외
-                .csrf().ignoringAntMatchers("/CnoCheck", "/production/monthPlan")
+                .csrf().ignoringAntMatchers("/CnoCheck","/onadd", "/onaddcheck","/offadd", "/offaddcheck", "/production/monthPlan")
                 .and()
                 .headers().frameOptions().disable()
                 .and()
@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
+                .antMatchers("/","/onadd" ,"/offadd" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
                 .antMatchers("/managerAcess", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
                 .anyRequest().authenticated();
 

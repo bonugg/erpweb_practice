@@ -1,5 +1,95 @@
 let popupLayer = document.getElementById("popup_layer");
-document.addEventListener('DOMContentLoaded', function () {
+const onButton = document.getElementById('on');
+const offButton = document.getElementById('off');
+const cno = $('#cno').val();
+const no = $('#no').val();
+let today = new Date();
+let year = today.getFullYear();
+let month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 1월이 0으로 시작하므로 1을 더합니다.
+let day = today.getDate().toString().padStart(2, '0'); // 일자가 두 자리가 되도록 왼쪽에 0을 추가합니다.
+const pattern = "218.153.162.95";
+
+let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
+
+
+function ipcheck(onoff) {
+    $.getJSON('https://jsonip.com?format=json', function (data) {
+        let ipAddress = data.ip;
+        console.log(ipAddress);
+        if (pattern === ipAddress && onoff == on) {
+            $("#on").removeAttr("disabled");
+        }else if (pattern === ipAddress && onoff == off) {
+            $("#off").removeAttr("disabled");
+        }
+    })
+}
+$('#on').attr('disabled', true);
+$('#off').attr('disabled', true);
+
+onButton.onclick = function () { //출근 버튼 클릭 이벤트
+    $.ajax({
+        type: 'POST',
+        url: '/onadd',
+        success: function (outputDateString) {
+            $('#on').attr('disabled', true);
+            $('#on_text').text(outputDateString);
+            $('#off').removeAttr("disabled");
+        }
+    });
+}
+$.ajax({ //출퇴근 버튼 상태 가져오기
+    type: 'POST',
+    url: '/onaddcheck',
+    data: {
+        start: formattedDate
+    },
+    success: function (startdate) {
+        console.log(startdate)
+        if (startdate != "") {
+            $('#on').attr('disabled', true);
+            $('#on_text').text(startdate);
+            $.ajax({
+                type: 'POST',
+                url: '/offaddcheck',
+                data: {
+                    end: formattedDate
+                },
+                success: function (enddate) {
+                    if (enddate != "") {
+                        $('#off').attr('disabled', true);
+                        $('#off_text').text(enddate);
+                    } else {
+                        ipcheck(off);
+                    }
+                }
+            });
+        } else {
+            console.log("1")
+            ipcheck(on);
+        }
+    }
+});
+
+offButton.onclick = function () { //퇴근 버튼 클릭 이벤트
+    $.ajax({
+        type: 'POST',
+        url: '/offadd',
+        data: {
+            start: formattedDate
+        },
+        success: function (outputDateString) {
+            $('#off').attr('disabled', true);
+            $('#off_text').text(outputDateString);
+            onContentLoaded();
+            $('#all').click();
+        }
+    });
+}
+
+onContentLoaded();
+
+function onContentLoaded() {
+    // 원래 'DOMContentLoaded' 이벤트 리스너에서 실행하려고 했던 코드를 작성
     $(function () {
         const request = $.ajax({
             url: "/production/monthPlan",
@@ -13,51 +103,57 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#vacation').css("backgroundColor", "lightgray");
             $('#meeting').css("backgroundColor", "lightgray");
 
-            let filteredVacationData = data.filter(function (event) {//휴가가 아닌 데이터 필터링
-                return event.classify === '휴가';
+            let filteredAttendanceData = data.filter(function (event) {
+                return event.title === '출석' && event.no == no;
             }).map(function (event) {
                 return {
                     ...event,
                     backgroundColor: '#008000',
-                    borderColor : '#008000'
+                    borderColor: '#008000'
                 };
             });
 
-            let filteredBusinessData = data.filter(function (event) {
-                return event.classify === '출장';
-            }).map(function (event) {
-                return {
-                    ...event,
-                    backgroundColor: 'indianred',
-                    borderColor : 'indianred'
-                };
-            });
-
-            let filteredMeetingData = data.filter(function (event) {
-                return event.classify === '회의';
+            let filteredEarlyLeaveData = data.filter(function (event) {//휴가가 아닌 데이터 필터링
+                return event.title === '조퇴' && event.no == no;
             }).map(function (event) {
                 return {
                     ...event,
                     backgroundColor: 'orange',
-                    borderColor : 'orange'
+                    borderColor: 'orange'
                 };
             });
 
-            let newEventData = filteredVacationData.concat(filteredBusinessData).concat(filteredMeetingData)
-                .map(function(event) {
+            let filteredLatenessData = data.filter(function (event) {
+                return event.title === '지각' && event.no == no;
+            }).map(function (event) {
+                return {
+                    ...event,
+                    backgroundColor: 'indianred',
+                    borderColor: 'indianred'
+                };
+            });
 
-                        const newEvent = Object.assign({}, event); // 객체 복제
-                        const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
-                        if(event.classify != '회의') {
-                            endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
-                            newEvent.end = endDate.toISOString().substring(0, 10); // ISO 8601 문자열로 변환 후, 문자열 일부를 추출
-                        }
-                        return newEvent;
+            let filteredAbsentData = data.filter(function (event) {
+                return event.title === '결석' && event.no == no;
+            }).map(function (event) {
+                return {
+                    ...event,
+                    backgroundColor: 'red',
+                    borderColor: 'red'
+                };
+            });
+
+            let newEventData = filteredAttendanceData.concat(filteredEarlyLeaveData).concat(filteredLatenessData).concat(filteredAbsentData)
+                .map(function (event) {
+
+                    const newEvent = Object.assign({}, event); // 객체 복제
+                    const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
+                    return newEvent;
                 });
 
-            console.log(newEventData);
+
             let calendar = new FullCalendar.Calendar(calendarEl, {
-                events : newEventData,
+                events: newEventData,
                 dayMaxEventRows: true, // for all non-TimeGrid views
                 views: {
                     timeGrid: {
@@ -73,13 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 firstDay: 1, //월요일부터 시작
                 locale: "ko",
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-                eventClick: function(info) {
+                eventClick: function (info) {
                     popupLayer.style.display = "block";
 
-                    if(info.event.extendedProps.classify == '휴가'){
+                    if (info.event.extendedProps.classify == '휴가') {
                         $('#popup_vacationtype_div').text(info.event.extendedProps.vacationtype).show();
                         $('#popup_desc_div').css("height", "64%");
-                    }else {
+                    } else {
                         $('#popup_vacationtype_div').hide();
                         $('#popup_desc_div').css("height", "73%");
                     }
@@ -91,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     datedata[0] = info.event.start;
                     datedata[1] = info.event.end;
 
-                    for(let i = 0; i < datedata.length; i++){
+                    for (let i = 0; i < datedata.length; i++) {
                         const year = datedata[i].getFullYear();
                         const month = String(datedata[i].getMonth() + 1).padStart(2, "0");
                         const day = String(datedata[i].getDate()).padStart(2, "0");
@@ -104,8 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     $('#popup_date').text(datedata[0] + " - " + datedata[1]);
 
-                    if(popupLayer.style.display === "block"){
-                        document.addEventListener("click", function(event) {
+                    if (popupLayer.style.display === "block") {
+                        document.addEventListener("click", function (event) {
                             if (event.target.id == "popup_layer"
                                 && popupLayer.contains(event.target)) {
                                 popupLayer.style.display = "none";
@@ -124,15 +220,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     return {
                         ...event,
                         backgroundColor: '#008000',
-                        borderColor : '#008000'
+                        borderColor: '#008000'
                     };
-                }).map(function(event) {
-                        const newEvent = Object.assign({}, event); // 객체 복제
-                        const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
-                        endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
-                        newEvent.end = endDate.toISOString().substring(0, 10); // ISO 8601 문자열로 변환 후, 문자열 일부를 추출
-                        return newEvent;
-                    });
+                }).map(function (event) {
+                    const newEvent = Object.assign({}, event); // 객체 복제
+                    const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
+                    endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
+                    newEvent.end = endDate.toISOString().substring(0, 10); // ISO 8601 문자열로 변환 후, 문자열 일부를 추출
+                    return newEvent;
+                });
 
                 $('#vacation').css("backgroundColor", "white");
                 $('#meeting').css("backgroundColor", "lightgray");
@@ -148,9 +244,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     return {
                         ...event,
                         backgroundColor: 'orange',
-                        borderColor : 'orange'
+                        borderColor: 'orange'
                     };
-                }).map(function(event) {
+                }).map(function (event) {
                     const newEvent = Object.assign({}, event); // 객체 복제
                     const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
                     endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
@@ -171,9 +267,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     return {
                         ...event,
                         backgroundColor: 'indianred',
-                        borderColor : 'indianred'
+                        borderColor: 'indianred'
                     };
-                }).map(function(event) {
+                }).map(function (event) {
                     const newEvent = Object.assign({}, event); // 객체 복제
                     const endDate = new Date(newEvent.end); // 'end' 날짜 문자열을 Date 객체로 변환
                     endDate.setDate(endDate.getDate() + 1); // 날짜를 1일 추가
@@ -197,4 +293,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
-});
+}
+
+document.addEventListener('DOMContentLoaded', onContentLoaded);

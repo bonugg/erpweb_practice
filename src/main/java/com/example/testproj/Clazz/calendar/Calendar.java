@@ -40,6 +40,7 @@ public class Calendar {
     @JoinColumn(name = "NO")
     private User user;
 
+
     public Calendar(String TITLE, String DESCRIPTION, String start, String end, String DEPT, String CLASSIFY, long NO, User user) {
         if(CLASSIFY.equals("회의")){
             this.TITLE = TITLE;

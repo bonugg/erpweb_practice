@@ -31,13 +31,13 @@ public class SecurityConfig {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/","/onadd" ,"/offadd" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
+                .antMatchers("/onadd" ,"/offadd" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
                 .antMatchers("/managerAcess", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
                 .anyRequest().authenticated();
 
         http
                 .formLogin()
-                .loginPage("/")    // GET 요청
+                .loginPage("/login")    // GET 요청
                 .permitAll()
                 .loginProcessingUrl("/auth")    // POST 요청
                 .usernameParameter("CNO")

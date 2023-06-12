@@ -93,12 +93,24 @@ $('#vacation').on('click', function () {
     document.getElementById('pagination2').style.display = 'none';
     document.getElementById('pagination3').style.display = 'none';
     $('#table-body').empty();
+    $('#vacation').css("color","cornflowerblue");
+    $('#meeting').css("color","");
+    $('#business').css("color","");
+    $('#bar2-1').css("backgroundColor","cornflowerblue");
+    $('#bar2-2').css("backgroundColor","gray");
+    $('#bar2-3').css("backgroundColor","gray");
     loadPageData(currentPage);
 });
 $('#meeting').on('click', function () {
     document.getElementById('pagination').style.display = 'none';
     document.getElementById('pagination2').style.display = 'none';
     document.getElementById('pagination3').style.display = 'none';
+    $('#meeting').css("color","cornflowerblue");
+    $('#vacation').css("color","");
+    $('#business').css("color","");
+    $('#bar2-2').css("backgroundColor","cornflowerblue");
+    $('#bar2-1').css("backgroundColor","gray");
+    $('#bar2-3').css("backgroundColor","gray");
     $('#table-body').empty();
     loadPageDataMeeting(currentPage2);
 });
@@ -106,6 +118,12 @@ $('#business').on('click', function () {
     document.getElementById('pagination').style.display = 'none';
     document.getElementById('pagination2').style.display = 'none';
     document.getElementById('pagination3').style.display = 'none';
+    $('#business').css("color","cornflowerblue");
+    $('#meeting').css("color","");
+    $('#vacation').css("color","");
+    $('#bar2-3').css("backgroundColor","cornflowerblue");
+    $('#bar2-2').css("backgroundColor","gray");
+    $('#bar2-1').css("backgroundColor","gray");
     $('#table-body').empty();
     loadPageDataBusiness(currentPage3);
 });
@@ -119,7 +137,7 @@ function loadPageData(page) {
         console.log(data);
         for (let i = 0; i < data.content.length; i++) {
             if (i == 0) {
-                $("#table-body").append("<tr id='th_tr'><th id='th_vno'>글 번호</th><th id='th_cno'>사번</th><th id='th_name'>이름</th><th id='th_date'>휴가 시작 날짜</th><th id='th_date'>휴가 종료 날짜</th><th id='th_access'>결재여부</th></tr>")
+                $("#table-body").append("<tr id='th_tr'><th id='th_vno' style='font-size: 15px'>글 번호</th><th id='th_cno' style='font-size: 15px'>사번</th><th id='th_name' style='font-size: 15px'>이름</th><th id='th_date' style='font-size: 15px'>휴가 시작 날짜</th><th id='th_date' style='font-size: 15px'>휴가 종료 날짜</th><th id='th_access' style='font-size: 15px'>결재여부</th></tr>")
                 $("#table-body").append("<tr class='th_td' onclick=showvacationview(" + data.content[i].VNO + ")><td id='td_vno'>" + data.content[i].VNO + "</td><td id='td_cno'>" + data.content[i].CNO + "</td><td class='title_td' id='td_name'><a>" + data.content[i].TITLE + "</a></td><td class='td_date'>" + data.content[i].start + "</td><td class='td_date'>" + data.content[i].end + "</td><td class='Accessva_cls' id='td_access'>" + data.content[i].Accessva + "</td></tr>");
             } else
                 $("#table-body").append("<tr class='th_td' onclick=showvacationview(" + data.content[i].VNO + ")><td id='td_vno'>" + data.content[i].VNO + "</td><td id='td_cno'>" + data.content[i].CNO + "</td><td class='title_td' id='td_name'><a>" + data.content[i].TITLE + "</a></td><td class='td_date'>" + data.content[i].start + "</td><td class='td_date'>" + data.content[i].end + "</td><td class='Accessva_cls' id='td_access'>" + data.content[i].Accessva + "</td></tr>");

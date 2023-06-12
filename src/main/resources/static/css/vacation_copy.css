@@ -1,100 +1,35 @@
 #fullscreen {
     width: 100vw;
-    margin: 0;
-    padding: 0;
-}
-#screen11{
-    width: 60%;
-    height: 350px;
-    margin: auto;
-}
-#screen111{
-    width: 50%;
-    height: 250px;
-    margin: auto;
+    height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
-#screen112{
-    width: 50%;
-    height: 100px;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-#sc_title{
-    width: 100%;
-    height: 100px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-#h2_title{
-    font-family: 'Gowun Dodum', sans-serif;
-    font-size: 40px;
-    margin-right: 20px;
-}
+
 #screen1 {
-    margin: auto;
     width: 60%;
-    height: 500px;
-}
-.cal_btn_div{
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-}
-.cal_btn_div:hover .cal_btn{
-    color: cornflowerblue;
-}
-#bar2-1{
-    width: 100%;
-    height: 10%;
-    background-color: gray;
-}
-#bar2-2{
-    width: 100%;
-    height: 10%;
-    background-color: gray;
-}
-#bar2-3{
-    width: 100%;
-    height: 10%;
-    background-color: gray;
-}
-#bar3{
-    width: 100%;
-    height: 100%;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease-in-out;
-}
-.cal_btn_div:hover #bar3{
-    background-color: cornflowerblue;
-    transform: scaleX(1);
+    height: 700px;
 }
 
 #btn_access_div {
     width: 100%;
     height: 120px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.cal_btn_div2{
-    height: 90%;
-    width: 100%;
-    display: flex;
+    justify-content: left;
     align-items: flex-end;
-    justify-content: center;
 }
 
 .cal_btn {
     font-family: 'Gowun Dodum', sans-serif;
+    width: 10%;
+    height: 20%;
+    background-color: white;
+    border: 1px solid lightgray;
     cursor: pointer;
-    font-size: 20px;
+}
+
+.cal_btn:hover {
+    background-color: whitesmoke;
 }
 
 .cal_btn:focus {
@@ -210,7 +145,7 @@ table {
     border-spacing: 0px 10px;
 }
 #th_tr{
-    background-color: cornflowerblue;
+    background-color: #4c4c4c;
     height: 30px;
 }
 .th_td{
@@ -222,7 +157,6 @@ table {
 }
 #th_vno{
     width: 8%;
-    height: 40px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -240,34 +174,28 @@ table {
     border-bottom-right-radius : 5px;
 }
 #td_vno{
-    height: 40px;
-    font-size: 17px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-right-width: 0px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 #td_cno{
-    font-size: 17px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-right-width: 0px;
     border-left-width: 0px;
 }
 #td_name{
-    font-size: 17px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-right-width: 0px;
     border-left-width: 0px;
 }
 .td_date{
-    font-size: 17px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-right-width: 0px;
     border-left-width: 0px;
 }
 #td_access{
-    font-size: 17px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-left-width: 0px;
     border-top-right-radius : 5px;
     border-bottom-right-radius : 5px;
@@ -444,7 +372,7 @@ textarea {
 
 #th_tr th{
     font-size: 13px;
-    color: black;
+    color: white;
     font-family: 'Gowun Dodum', sans-serif;
     border-style: hidden;
 }

@@ -11,34 +11,54 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <link rel="stylesheet" type="text/css" href="css/header.css">
 </head>
-<header id="header1">
-    <nav>
-        <ul>
+<header id="header_header">
+    <nav id="nav_header">
+        <ul id="ul_header">
             <li id="logo_li">
                 <a id="logo_text" href="/">BIT ERP</a>
-                <a id="menu_text" href="/vacation">휴가</a>
-                <a id="menu_text" href="/meeting">회의</a>
-                <a id="menu_text" href="/business">출장</a>
-                {{#isTeamleader}}
-                    <a id="menu_text" href="/userAcess">신청한 결재</a>
-                    <a id="menu_text" href="/managerAcess">승인요청 목록</a>
-                {{/isTeamleader}}
-                {{#isTeammember}}
-                    <a id="menu_text" href="/userAcess">신청한 결재</a>
-                {{/isTeammember}}
             </li>
-            {{#user.CNO}}
-            <li id="login_sigin_li">
-                <div id="login_signin_div">
-                    <a id="name_text">{{user.NAME}}님</a>
-                    <form action="/logout" method="post">
-                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
-                        <button type="button" id="logout_text" onclick="this.form.submit();">
-                            로그아웃
-                        </button>
-                    </form>
+            <li id="menu_li">
+                <div class="approval_menu">
+                    <a class="menu_text_apv" id="menu_apv">결재</a>
+                    <div id="bar"></div>
+                    <ul class="submenu">
+                        <li class="submenu_item">
+                            <a class="menu_text" href="/vacation">휴가</a>
+                        </li>
+                        <li class="submenu_item">
+                            <a class="menu_text" href="/meeting">회의</a>
+                        </li>
+                        <li class="submenu_item">
+                            <a class="menu_text" href="/business">출장</a>
+                        </li>
+                        {{#isTeamleader}}
+                            <li class="submenu_item">
+                                <a class="menu_text" href="/userAcess">신청한 결재</a>
+                            </li>
+                            <li class="submenu_item">
+                                <a class="menu_text" href="/managerAcess">승인요청 목록</a>
+                            </li>
+                        {{/isTeamleader}}
+                        {{#isTeammember}}
+                            <li class="submenu_item">
+                                <a class="menu_text" href="/userAcess">신청한 결재</a>
+                            </li>
+                        {{/isTeammember}}
+                    </ul>
                 </div>
             </li>
+            {{#user.CNO}}
+                <li id="login_sigin_li">
+                    <div id="login_signin_div">
+                        <a id="name_text">{{user.NAME}}님</a>
+                        <form action="/logout" method="post">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+                            <button type="button" id="logout_text" onclick="this.form.submit();">
+                                로그아웃
+                            </button>
+                        </form>
+                    </div>
+                </li>
             {{/user.CNO}}
             {{^user.CNO}}
                 <li id="login_sigin_li">
@@ -51,7 +71,6 @@
         </ul>
     </nav>
     <nav>
-
     </nav>
 </header>
 </html>

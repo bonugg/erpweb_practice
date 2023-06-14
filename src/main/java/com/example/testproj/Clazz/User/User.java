@@ -31,6 +31,8 @@ public class User {
     private String EMAIL;
     @Column
     private String POSITION;
+    @Column
+    private String USER_IMAGE;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Calendar> calendarList = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

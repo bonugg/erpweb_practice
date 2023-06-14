@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/img/**").permitAll()
                 .antMatchers("/onadd" ,"/offadd" ,"/sginin", "/sginin_member", "/login", "/CnoCheck", "/production/monthPlan").permitAll()
                 .antMatchers("/managerAcess", "/Access", "/Cancle").hasAuthority("ROLE_MANAGER")
                 .anyRequest().authenticated();

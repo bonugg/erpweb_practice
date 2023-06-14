@@ -6,42 +6,50 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="css/siginin.css">
+    <link rel="stylesheet" type="text/css" href="css/approval.css">
 </head>
 <body>
 {{>header/header}}
 <div id="fullscreen">
     <div id="screen1">
-        <form action="/meeting/add" method="POST" id="vacation_form">
-            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
-            <input type="hidden" name="user" value="{{user.NO}}">
-            <input type="hidden" name="Accessva" value="미승인">
-            <input type="text" name="NAME" readOnly value="{{user.NAME}}">
-            <br>
-            <input type="text" name="CNO" readOnly value="{{user.CNO}}">
-            <br>
-            <input type="text" name="DEPT" readOnly value="{{user.DEPT}}">
-            <br>
-            <label for="start_date">회의 제목:</label>
-            <input type="text" name="TITLE" required/>
-            <br>
-
-            <label for="start_date">회의 시작 시간:</label>
-            <input type="datetime-local" id="start" name="start" required/>
-
-            <label for="end_date">회의 종료 시간:</label>
-            <input type="datetime-local" id="end" name="end" required/>
-            <br>
-
-            <label for="reason">회의 내용</label>
-            <textarea id="reason" name="DESCRIPTION" required></textarea>
-            <br>
-            <input type="hidden" name="CLASSIFY" value="회의">
-            <br>
-
-            <input type="submit" value="제출">
-        </form>
-
+        <div id="screen1-1">
+            <h2 id="h2_title">회의신청서</h2>
+        </div>
+        <div id="screen1-2">
+            <form action="/vacation/add" method="POST" id="vacation_form">
+                <table>
+                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+                    <input type="hidden" name="user" value="{{user.NO}}">
+                    <input type="hidden" name="Accessva" value="미승인">
+                    <input type="hidden" name="CLASSIFY" value="회의">
+                    <tr>
+                        <th>부서</th>
+                        <td id="dept_td"><input type="text" name="DEPT" readOnly value="{{user.DEPT}}"></td>
+                        <th>이름</th>
+                        <td><input type="text" name="DEPT" readOnly value="{{user.NAME}}"></td>
+                    </tr>
+                    <tr>
+                        <th>사번</th>
+                        <td><input type="text" name="DEPT" readOnly value="{{user.CNO}}"></td>
+                        <th id="meeting_td">회의 제목</th>
+                        <td><input type="text" name="TITLE" required/></td>
+                    </tr>
+                    <tr>
+                        <th>회의 시작 시간</th>
+                        <td id="vacation_date_td"><input type="datetime-local" id="start" name="start" required/></td>
+                        <th>회의 종료 시간</th>
+                        <td><input type="datetime-local" id="end" name="end" required/></td>
+                    </tr>
+                    <tr>
+                        <th>회의 내용</th>
+                        <td colspan="3"><textarea id="reason" name="DESCRIPTION" required></textarea></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="submit_approval">
+            <input type="submit" value="제출" id="submit_approval_btn">
+        </div>
     </div>
 </div>
 <script src="js/vacation.js"></script>

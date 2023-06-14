@@ -11,66 +11,90 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <link rel="stylesheet" type="text/css" href="css/header.css">
 </head>
-<header id="header_header">
-    <nav id="nav_header">
-        <ul id="ul_header">
-            <li id="logo_li">
-                <a id="logo_text" href="/">BIT ERP</a>
-            </li>
-            <li id="menu_li">
-                <div class="approval_menu">
-                    <a class="menu_text_apv" id="menu_apv">결재</a>
-                    <div id="bar"></div>
-                    <ul class="submenu">
-                        <li class="submenu_item">
-                            <a class="menu_text" href="/vacation">휴가</a>
-                        </li>
-                        <li class="submenu_item">
-                            <a class="menu_text" href="/meeting">회의</a>
-                        </li>
-                        <li class="submenu_item">
-                            <a class="menu_text" href="/business">출장</a>
-                        </li>
-                        {{#isTeamleader}}
-                            <li class="submenu_item">
-                                <a class="menu_text" href="/userAcess">신청한 결재</a>
-                            </li>
-                            <li class="submenu_item">
-                                <a class="menu_text" href="/managerAcess">승인요청 목록</a>
-                            </li>
-                        {{/isTeamleader}}
-                        {{#isTeammember}}
-                            <li class="submenu_item">
-                                <a class="menu_text" href="/userAcess">신청한 결재</a>
-                            </li>
-                        {{/isTeammember}}
-                    </ul>
+    <div id="div_row">
+        <div id="div_imt">
+        </div>
+        <div class="menu_div">
+            <div id="img_div">
+                <div id="menu_btn"></div>
+            </div>
+            <ul class="appmenu">
+                <div id="div_imt2"></div>
+                <li class="appmenu_item">
+                    <div class="menu_text_div_app">
+                        <a class="menu_text_app" href="/vacation">전자결재 신청하기</a>
+                    </div>
+                </li>
+                <li class="appmenu_item">
+                    <div class="menu_text_div_app">
+                        <a class="menu_text_app" href="/meeting">전자결재 요청 목록</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="menu_div2">
+            <div id="img_div">
+                <div id="menu_btn"></div>
+            </div>
+            <ul class="boardmenu">
+                <div id="div_imt2"></div>
+                <li class="boardmenu_item">
+                    <div class="menu_text_div_app">
+                        <a class="menu_text_app" href="/business">공지 게시판</a>
+                    </div>
+                </li>
+                <li class="boardmenu_item">
+                    <div class="menu_text_div_app">
+                        <a class="menu_text_app" href="/vacation">부서 게시판</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <header id="header_cols">
+        <nav id="nav_cols">
+            <ul id="ul_cols">
+                <li id="logo_li">
+                    <div id="logo_div">
+                        <img src="img/1.png" id="logo_img">
+                    </div>
+                </li>
+                <li id="my_li">
+                <div id="my_div">
+                    <div id="my_div_1">
+                        <div id="my_dept">
+                            <h5>{{user.DEPT}}</h5>
+                        </div>
+                    </div>
+                    <div id="my_div_2">
+                        <h6>{{user.NAME}}님</h6>
+                        <div class="nav_div">
+                            <div id="nav_img_div">
+                                <img src="img/nav.png" id="nav_img">
+                            </div>
+                            <ul class="submenu">
+                                <li class="submenu_item">
+                                    <div class="menu_text_div">
+                                        <a class="menu_text_user" href="/">마이페이지</a>
+                                    </div>
+                                </li>
+                                <li class="submenu_item">
+                                    <div class="menu_text_div">
+                                        <form action="/logout" method="post">
+                                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
+                                            <button type="button" id="logout_text" onclick="this.form.submit();">
+                                                로그아웃
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </li>
-            {{#user.CNO}}
-                <li id="login_sigin_li">
-                    <div id="login_signin_div">
-                        <a id="name_text">{{user.NAME}}님</a>
-                        <form action="/logout" method="post">
-                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
-                            <button type="button" id="logout_text" onclick="this.form.submit();">
-                                로그아웃
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            {{/user.CNO}}
-            {{^user.CNO}}
-                <li id="login_sigin_li">
-                    <div id="login_signin_div">
-                        <a id="login_text" href="/login">로그인</a>
-                        <a id="sginin_text" href="/sginin">회원가입</a>
-                    </div>
-                </li>
-            {{/user.CNO}}
-        </ul>
-    </nav>
-    <nav>
-    </nav>
-</header>
+            </ul>
+        </nav>
+    </header>
+<script src="js/header.js"></script>
 </html>

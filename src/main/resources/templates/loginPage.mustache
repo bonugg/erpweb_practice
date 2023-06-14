@@ -9,12 +9,16 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
-{{>header/header}}
 <div id="fullscreen">
     <div id="screen1">
+        <div id="logo_div">
+            <div id="logo_div2">
+                <img src="img/1.png" id="logo_img2">
+            </div>
+        </div>
         <form method="post" action="/auth" id="login_form">
             <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
-            <input type="text" name="CNO" placeholder="사번"/>
+            <input type="text" name="CNO" placeholder="사번" style="margin-bottom: 20px"/>
             <input type="password" name="PWD" placeholder="비밀번호"/>
             {{#error}}
                 <p id="valid" class="alert alert-danger">{{exception}}</p>

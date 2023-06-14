@@ -20,81 +20,147 @@
     <input type="hidden" id="no" value="{{user.NO}}">
 {{/user.CNO}}
 <div id="fullscreen">
-    <div id="screen1">
-        <div id="screen1-1">
-            <div id="screen1-1-1">
-                <div id="screen1-1-1-1">
-                    <div id="screen1-1-1-2">
-                        <a>출퇴근 확인</a>
-                    </div>
-                    <div id="screen1-1-1-3">
-                        <div id="screen1-1-1-4">
-                            <div id="screen1-1-1-4-1">
-                                <a id="on_text">출근 시각</a>
-                            </div>
-                            <div id="screen1-1-1-4-2">
-                                <button id="on">출근</button>
-                            </div>
+    <div id="a_screen">
+        <div id="b_screen">
+            <div id="b_screen_1">
+                <div id="b_screen_1_1">
+                    <div id="user_on_off_div">
+                        <div id="user_img_div">
+                            <img src="img/user.jpg" id="user_img">
                         </div>
-                        <div id="screen1-1-1-5">
-                            <div id="screen1-1-1-4-1">
-                                <a id="off_text">퇴근 시각</a>
+                        <div id="on_off_div">
+                            <div id="on_div">
+                                <div id="on_button_div">
+                                    <button id="on">출근</button>
+                                </div>
+                                <div id="on_time_div">
+                                    <a id="on_text">출근 시각</a>
+                                </div>
                             </div>
-                            <div id="screen1-1-1-4-2">
-                                <button id="off">퇴근</button>
+                            <div id="off_div">
+                                <div id="off_button_div">
+                                    <button id="off">퇴근</button>
+                                </div>
+                                <div id="off_time_div">
+                                    <a id="off_text">퇴근 시각</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="b_screen_1_2">
+
+                </div>
+
             </div>
-        </div>
-        <div id="screen1-2">
-            <div id="screen1-2-1">
+            <div id="b_screen_2">
+
+            </div>
+            <div id="b_screen_3">
+                <div id="calendar_div">
+                    <div id="cal_btn_div">
+                            <button class="cal_btn" id="all">출근</button>
+                            <button class="cal_btn" id="vacation">
+                                <div id="circle_vacation"></div>
+                                휴가
+                            </button>
+                            <button class="cal_btn" id="meeting">
+                                <div id="circle_meeting"></div>
+                                회의
+                            </button>
+                            <button class="cal_btn" id="business">
+                                <div id="circle_business"></div>
+                                출장
+                            </button>
+                    </div>
+                    <div id="cal_div">
+                        <div id='calendar'></div>
+                    </div>
+                </div>
 
             </div>
 
         </div>
-    </div>
-    <div id="screen2">
-        <div id="screen2-1">
-            <div id="cal_btn_div">
-                <button class="cal_btn" id="all">출근</button>
-                <button class="cal_btn" id="vacation" style="margin-left: 5px">
-                    <div id="circle_vacation"></div>
-                    휴가
-                </button>
-                <button class="cal_btn" id="meeting" style="margin-left: 5px">
-                    <div id="circle_meeting"></div>
-                    회의
-                </button>
-                <button class="cal_btn" id="business" style="margin-left: 5px">
-                    <div id="circle_business"></div>
-                    출장
-                </button>
-            </div>
-            <div id="cal_div">
-                <div id='calendar'></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="popup_layer" id="popup_layer" style="display: none;">
-    <div class="popup_box">
-        <!--팝업 컨텐츠 영역-->
-        <div class="popup_cont">
-            <div id="popup_vacationtype_div"></div>
-            <div id="popup_title_div">
-                <p id="popup_title"></p>
-            </div>
-            <div id="popup_date_div">
-                <p id="popup_date"></p>
-            </div>
-            <div id="popup_desc_div">
-                <p id="popup_desc"></p>
-            </div>
+        <div id="c_screen">
 
         </div>
+
     </div>
+<!--    <div id="screen1">-->
+<!--        <div id="screen1-1">-->
+<!--            <div id="screen1-1-1">-->
+<!--                <div id="screen1-1-1-1">-->
+<!--                    <div id="screen1-1-1-2">-->
+<!--                        <a>출퇴근 체크</a>-->
+<!--                    </div>-->
+<!--                    <div id="screen1-1-1-3">-->
+<!--                        <div id="screen1-1-1-4">-->
+<!--                            <div id="screen1-1-1-4-1">-->
+<!--                                <a id="on_text">출근 시각</a>-->
+<!--                            </div>-->
+<!--                            <div id="screen1-   1-1-4-2">-->
+<!--                                <button id="on">출근</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="screen1-1-1-5">-->
+<!--                            <div id="screen1-1-1-4-1">-->
+<!--                                <a id="off_text">퇴근 시각</a>-->
+<!--                            </div>-->
+<!--                            <div id="screen1-1-1-4-2">-->
+<!--                                <button id="off">퇴근</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div id="screen1-2">-->
+<!--            <div id="screen1-2-1">-->
+
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div id="screen2">-->
+<!--        <div id="screen2-1">-->
+<!--            <div id="cal_btn_div">-->
+<!--                <button class="cal_btn" id="all">출근</button>-->
+<!--                <button class="cal_btn" id="vacation" style="margin-left: 5px">-->
+<!--                    <div id="circle_vacation"></div>-->
+<!--                    휴가-->
+<!--                </button>-->
+<!--                <button class="cal_btn" id="meeting" style="margin-left: 5px">-->
+<!--                    <div id="circle_meeting"></div>-->
+<!--                    회의-->
+<!--                </button>-->
+<!--                <button class="cal_btn" id="business" style="margin-left: 5px">-->
+<!--                    <div id="circle_business"></div>-->
+<!--                    출장-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div id="cal_div">-->
+<!--                <div id='calendar'></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="popup_layer" id="popup_layer" style="display: none;">-->
+<!--    <div class="popup_box">-->
+<!--        &lt;!&ndash;팝업 컨텐츠 영역&ndash;&gt;-->
+<!--        <div class="popup_cont">-->
+<!--            <div id="popup_vacationtype_div"></div>-->
+<!--            <div id="popup_title_div">-->
+<!--                <p id="popup_title"></p>-->
+<!--            </div>-->
+<!--            <div id="popup_date_div">-->
+<!--                <p id="popup_date"></p>-->
+<!--            </div>-->
+<!--            <div id="popup_desc_div">-->
+<!--                <p id="popup_desc"></p>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
 </div>
 </body>
 <script src="js/main.js"></script>

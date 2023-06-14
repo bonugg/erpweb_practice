@@ -76,24 +76,6 @@ public class MainController {
     @ResponseBody
     @RequestMapping(value = "/onadd", method = RequestMethod.POST)
     public String onadd(HttpServletRequest request) throws Exception {
-        String ip = request.getHeader("X-Forwarded-For");
-
-        if (ip == null) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null) {
-            ip = request.getRemoteAddr();
-        }
-        System.out.println(ip);
         Calendar calendar = new Calendar();
         SessionUser user1 = (SessionUser) httpSession.getAttribute("user");
         User user = userRepository.findByCNO(user1.getCNO()).get();
@@ -107,6 +89,7 @@ public class MainController {
 
         calendar.setCLASSIFY("출퇴근");
         calendar.setStart(outputDateString);
+        calendar.setEnd("0");
         calendarRepository.save(calendar);
 
         return outputDateString;
